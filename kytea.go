@@ -31,6 +31,12 @@ func (k KyTea) ReadModel(path string) {
 	C.kytea_read_model(k.kytea, cpath)
 }
 
+func (k KyTea) StringUtil() StringUtil {
+	return StringUtil{
+		util: C.kytea_get_string_util(k.kytea),
+	}
+}
+
 func (k KyTea) GetWS(sentence string) []string {
 	if sentence == "" {
 		return []string{}

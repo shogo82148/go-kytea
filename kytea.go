@@ -37,6 +37,10 @@ func (k KyTea) StringUtil() StringUtil {
 	}
 }
 
+func (k KyTea) CalculateWS(s Sentence) {
+	C.kytea_calculate_ws(k.kytea, s.sentence)
+}
+
 func (k KyTea) GetWS(sentence string) []string {
 	if sentence == "" {
 		return []string{}

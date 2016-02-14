@@ -30,6 +30,12 @@ kytea_string_util_t *kytea_get_string_util(kytea_t *kytea) {
     return reinterpret_cast<kytea_string_util_t*>(k->getStringUtil());
 }
 
+void kytea_calculate_ws(kytea_t *kytea, kytea_sentence_t *sentence) {
+    Kytea *k = reinterpret_cast<Kytea*>(kytea);
+    KyteaSentence *s = reinterpret_cast<KyteaSentence*>(sentence);
+    k->calculateWS(*s);
+}
+
 kytea_vector_string_t *kytea_get_ws(kytea_t *kytea, const char *input, size_t length) {
     kytea::Kytea *k = reinterpret_cast<kytea::Kytea*>(kytea);
     kytea::StringUtil* util = k->getStringUtil();

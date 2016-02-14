@@ -11,5 +11,9 @@ func TestKyTea(t *testing.T) {
 
 	kytea.ReadModel("/usr/local/share/kytea/model.bin")
 
-	t.Log(kytea.GetWS("こんにちは世界"))
+	util := kytea.StringUtil()
+	sentence := util.NewSentence("こんにちは世界")
+	defer sentence.Destory()
+
+	kytea.CalculateWS(sentence)
 }

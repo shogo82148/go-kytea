@@ -12,3 +12,7 @@ type Sentence struct {
 func (s Sentence) Destory() {
 	C.kytea_sentence_destroy(s.sentence)
 }
+
+func (s Sentence) WordsLen() int {
+	return int(C.kytea_sentence_words_len(s.sentence))
+}

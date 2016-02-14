@@ -16,4 +16,6 @@ func TestKyTea(t *testing.T) {
 	defer sentence.Destory()
 
 	kytea.CalculateWS(sentence)
+
+	t.Log(sentence.WordsLen())
 }

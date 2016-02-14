@@ -47,3 +47,7 @@ kytea_sentence_t *kytea_string_util_new_sentence(kytea_string_util_t *util_t, co
 void kytea_sentence_destroy(kytea_sentence_t *sentence) {
     delete reinterpret_cast<KyteaSentence*>(sentence);
 }
+
+size_t kytea_sentence_words_len(kytea_sentence_t *sentence) {
+    return reinterpret_cast<KyteaSentence*>(sentence)->words.size();
+}

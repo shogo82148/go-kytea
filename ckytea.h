@@ -7,6 +7,10 @@ typedef struct kytea_sentence_t kytea_sentence_t;
 typedef struct kytea_string_util_t kytea_string_util_t;
 typedef struct kytea_word_t kytea_word_t;
 typedef struct kytea_std_string_t kytea_std_string_t;
+typedef struct kytea_tag_t {
+    kytea_std_string_t *feature;
+    double score;
+} kytea_tag_t;
 
 kytea_t *kytea_new(void);
 void kytea_destroy(kytea_t *kytea);
@@ -21,7 +25,7 @@ size_t kytea_sentence_words_len(kytea_sentence_t *sentence);
 kytea_word_t *kytea_sentence_word_at(kytea_sentence_t *sentence, int i);
 void kytea_std_string_destroy(kytea_std_string_t *str);
 kytea_std_string_t *kytea_word_surface(kytea_word_t *word, kytea_string_util_t *util);
-kytea_std_string_t *kytea_word_tag(kytea_word_t *word, int i, int j, kytea_string_util_t *util);
+kytea_tag_t kytea_word_tag(kytea_word_t *word, int i, int j, kytea_string_util_t *util);
 size_t kytea_word_tags_len(kytea_word_t *word, int i);
 void kytea_std_string_destroy(kytea_std_string_t *str);
 const char *kytea_std_string_cstring(kytea_std_string_t *str);

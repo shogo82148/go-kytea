@@ -77,11 +77,13 @@ kytea_std_string_t *kytea_word_surface(kytea_word_t *word, kytea_string_util_t *
     return reinterpret_cast<kytea_std_string_t*>(str);
 }
 
-kytea_std_string_t *kytea_word_tag(kytea_word_t *word, int i, int j, kytea_string_util_t *util) {
+kytea_tag_t kytea_word_tag(kytea_word_t *word, int i, int j, kytea_string_util_t *util) {
     StringUtil *u = reinterpret_cast<StringUtil*>(util);
     KyteaWord *w = reinterpret_cast<KyteaWord*>(word);
-    string *str = new string(u->showString(w->tags[i][j].first));
-    return reinterpret_cast<kytea_std_string_t*>(str);
+    KyteaTag &tag = w->tags[i][j];
+    string *str = new string(u->showString(tag.first));
+    kytea_tag_t ret = {reinterpret_cast<kytea_std_string_t*>(str), tag.second};
+    return ret;
 }
 
 size_t kytea_word_tags_len(kytea_word_t *word, int i) {

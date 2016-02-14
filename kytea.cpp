@@ -36,6 +36,20 @@ void kytea_calculate_ws(kytea_t *kytea, kytea_sentence_t *sentence) {
     k->calculateWS(*s);
 }
 
+void kytea_calculate_tags(kytea_t *kytea, kytea_sentence_t *sentence, int i) {
+    Kytea *k = reinterpret_cast<Kytea*>(kytea);
+    KyteaSentence *s = reinterpret_cast<KyteaSentence*>(sentence);
+    k->calculateTags(*s, i);
+}
+
+void kytea_calculate_all_tags(kytea_t *kytea, kytea_sentence_t *sentence) {
+    Kytea *k = reinterpret_cast<Kytea*>(kytea);
+    KyteaSentence *s = reinterpret_cast<KyteaSentence*>(sentence);
+    KyteaConfig* config = k->getConfig();
+    for(int i = 0; i < config->getNumTags(); i++)
+        k->calculateTags(*s, i);
+}
+
 kytea_sentence_t *kytea_string_util_new_sentence(kytea_string_util_t *util_t, const char *input, size_t length) {
     string str(input, length);
     StringUtil* util = reinterpret_cast<StringUtil*>(util_t);
@@ -61,6 +75,18 @@ kytea_std_string_t *kytea_word_surface(kytea_word_t *word, kytea_string_util_t *
     KyteaWord *w = reinterpret_cast<KyteaWord*>(word);
     string *str = new string(u->showString(w->surface));
     return reinterpret_cast<kytea_std_string_t*>(str);
+}
+
+kytea_std_string_t *kytea_word_tag(kytea_word_t *word, int i, int j, kytea_string_util_t *util) {
+    StringUtil *u = reinterpret_cast<StringUtil*>(util);
+    KyteaWord *w = reinterpret_cast<KyteaWord*>(word);
+    string *str = new string(u->showString(w->tags[i][j].first));
+    return reinterpret_cast<kytea_std_string_t*>(str);
+}
+
+size_t kytea_word_tags_len(kytea_word_t *word, int i) {
+    KyteaWord *w = reinterpret_cast<KyteaWord*>(word);
+    return w->tags[i].size();
 }
 
 void kytea_std_string_destroy(kytea_std_string_t *str) {

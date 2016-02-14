@@ -40,3 +40,11 @@ func (k KyTea) StringUtil() StringUtil {
 func (k KyTea) CalculateWS(s Sentence) {
 	C.kytea_calculate_ws(k.kytea, s.sentence)
 }
+
+func (k KyTea) CalculateTags(s Sentence, i int) {
+	C.kytea_calculate_tags(k.kytea, s.sentence, C.int(i))
+}
+
+func (k KyTea) CalculateAllTags(s Sentence) {
+	C.kytea_calculate_all_tags(k.kytea, s.sentence)
+}

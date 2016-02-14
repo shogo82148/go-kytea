@@ -14,3 +14,13 @@ func (w KyTeaWord) Surface(util StringUtil) string {
 	defer C.kytea_std_string_destroy(s)
 	return C.GoString(C.kytea_std_string_cstring(s))
 }
+
+func (w KyTeaWord) Tag(i, j int, util StringUtil) string {
+	s := C.kytea_word_tag(w.word, C.int(i), C.int(j), util.util)
+	defer C.kytea_std_string_destroy(s)
+	return C.GoString(C.kytea_std_string_cstring(s))
+}
+
+func (w KyTeaWord) TagsLen(i int) int {
+	return int(C.kytea_word_tags_len(w.word, C.int(i)))
+}

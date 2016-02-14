@@ -17,5 +17,5 @@ func TestKyTea(t *testing.T) {
 
 	kytea.CalculateWS(sentence)
 
-	t.Log(sentence.WordsLen())
+	t.Log(sentence.Word(0).Surface(util))
 }

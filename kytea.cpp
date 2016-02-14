@@ -53,5 +53,20 @@ size_t kytea_sentence_words_len(kytea_sentence_t *sentence) {
 }
 
 kytea_word_t *kytea_sentence_word_at(kytea_sentence_t *sentence, int i) {
-    return &(reinterpret_cast<KyteaSentence*>(sentence)->words[i]);
+    return reinterpret_cast<kytea_word_t*>(&(reinterpret_cast<KyteaSentence*>(sentence)->words[i]));
+}
+
+kytea_std_string_t *kytea_word_surface(kytea_word_t *word, kytea_string_util_t *util) {
+    StringUtil *u = reinterpret_cast<StringUtil*>(util);
+    KyteaWord *w = reinterpret_cast<KyteaWord*>(word);
+    string *str = new string(u->showString(w->surface));
+    return reinterpret_cast<kytea_std_string_t*>(str);
+}
+
+void kytea_std_string_destroy(kytea_std_string_t *str) {
+    delete reinterpret_cast<string*>(str);
+}
+
+const char *kytea_std_string_cstring(kytea_std_string_t *str) {
+    return reinterpret_cast<string*>(str)->c_str();
 }

@@ -5,6 +5,7 @@ extern "C" {
 typedef struct kytea_t kytea_t;
 typedef struct kytea_sentence_t kytea_sentence_t;
 typedef struct kytea_string_util_t kytea_string_util_t;
+typedef struct kytea_word_t kytea_word_t;
 
 kytea_t *kytea_new(void);
 void kytea_destroy(kytea_t *kytea);
@@ -14,6 +15,7 @@ void kytea_calculate_ws(kytea_t *kytea, kytea_sentence_t *sentence);
 kytea_sentence_t *kytea_string_util_new_sentence(kytea_string_util_t *util, const char *input, size_t length);
 void kytea_sentence_destroy(kytea_sentence_t *sentence);
 size_t kytea_sentence_words_len(kytea_sentence_t *sentence);
+kytea_word_t *kytea_sentence_word_at(kytea_sentence_t *sentence, int i);
 
 #ifdef __cplusplus
 }

@@ -16,3 +16,9 @@ func (s Sentence) Destory() {
 func (s Sentence) WordsLen() int {
 	return int(C.kytea_sentence_words_len(s.sentence))
 }
+
+func (s Sentence) Word(i int) Word {
+	return Word{
+		word: C.kytea_sentence_word_at(s.sentence, C.int(i)),
+	}
+}

@@ -51,3 +51,7 @@ void kytea_sentence_destroy(kytea_sentence_t *sentence) {
 size_t kytea_sentence_words_len(kytea_sentence_t *sentence) {
     return reinterpret_cast<KyteaSentence*>(sentence)->words.size();
 }
+
+kytea_word_t *kytea_sentence_word_at(kytea_sentence_t *sentence, int i) {
+    return &(reinterpret_cast<KyteaSentence*>(sentence)->words[i]);
+}

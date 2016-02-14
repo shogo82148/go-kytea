@@ -40,20 +40,3 @@ func (k KyTea) StringUtil() StringUtil {
 func (k KyTea) CalculateWS(s Sentence) {
 	C.kytea_calculate_ws(k.kytea, s.sentence)
 }
-
-func (k KyTea) GetWS(sentence string) []string {
-	if sentence == "" {
-		return []string{}
-	}
-
-	s := *(**C.char)(unsafe.Pointer(&sentence))
-	vec := C.kytea_get_ws(k.kytea, s, C.size_t(len(sentence)))
-	defer C.kytea_vector_string_destory(vec)
-
-	size := int(C.kytea_vector_string_size(vec))
-	ret := make([]string, size)
-	for i := 0; i < size; i++ {
-		ret[i] = C.GoString(C.kytea_vector_string_at(vec, C.int(i)))
-	}
-	return ret
-}

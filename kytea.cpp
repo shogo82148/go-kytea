@@ -36,37 +36,6 @@ void kytea_calculate_ws(kytea_t *kytea, kytea_sentence_t *sentence) {
     k->calculateWS(*s);
 }
 
-kytea_vector_string_t *kytea_get_ws(kytea_t *kytea, const char *input, size_t length) {
-    kytea::Kytea *k = reinterpret_cast<kytea::Kytea*>(kytea);
-    kytea::StringUtil* util = k->getStringUtil();
-    std::vector<std::string>* vec = new std::vector<std::string>;
-    std::string str(input, length);
-    kytea::KyteaString surface_string(util->mapString(str));
-    kytea::KyteaSentence sentence(surface_string, util->normalize(surface_string));
-    k->calculateWS(sentence);
-
-    const kytea::KyteaSentence::Words & words =  sentence.words;
-    for(size_t i = 0; i < words.size(); i++) {
-        vec->push_back(util->showString(words[i].surface));
-    }
-
-    return reinterpret_cast<kytea_vector_string_t*>(vec);
-}
-
-size_t kytea_vector_string_size(kytea_vector_string_t *vector_string) {
-    std::vector<std::string>* vec = reinterpret_cast<std::vector<std::string>*>(vector_string);
-    return vec->size();
-}
-
-const char* kytea_vector_string_at(kytea_vector_string_t *vector_string, int index) {
-    std::vector<std::string>* vec = reinterpret_cast<std::vector<std::string>*>(vector_string);
-    return vec->at(index).c_str();
-}
-
-void kytea_vector_string_destory(kytea_vector_string_t *vector_string) {
-    delete reinterpret_cast<std::vector<std::string>*>(vector_string);
-}
-
 kytea_sentence_t *kytea_string_util_new_sentence(kytea_string_util_t *util_t, const char *input, size_t length) {
     string str(input, length);
     StringUtil* util = reinterpret_cast<StringUtil*>(util_t);

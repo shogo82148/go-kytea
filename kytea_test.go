@@ -18,6 +18,9 @@ func TestKyTea(t *testing.T) {
 	kytea.CalculateWS(sentence)
 	kytea.CalculateAllTags(sentence)
 
+	if got, expected := sentence.WordsLen(), 2; got != expected {
+		t.Errorf("want %d, got %d", expected, got)
+	}
 	if got, expected := sentence.Word(0).Surface(util), "こんにちは"; got != expected {
 		t.Errorf("want %s, got %s", expected, got)
 	}

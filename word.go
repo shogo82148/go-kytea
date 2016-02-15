@@ -21,6 +21,10 @@ func (w KyTeaWord) Tag(i, j int, util StringUtil) (string, float64) {
 	return C.GoString(C.kytea_std_string_cstring(tag.feature)), float64(tag.score)
 }
 
-func (w KyTeaWord) TagsLen(i int) int {
-	return int(C.kytea_word_tags_len(w.word, C.int(i)))
+func (w KyTeaWord) CandidateTagsLen(i int) int {
+	return int(C.kytea_word_candidate_tags_len(w.word, C.int(i)))
+}
+
+func (w KyTeaWord) TagsLen() int {
+	return int(C.kytea_word_tags_len(w.word))
 }

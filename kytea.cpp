@@ -86,9 +86,14 @@ kytea_tag_t kytea_word_tag(kytea_word_t *word, int i, int j, kytea_string_util_t
     return ret;
 }
 
-size_t kytea_word_tags_len(kytea_word_t *word, int i) {
+size_t kytea_word_candidate_tags_len(kytea_word_t *word, int i) {
     KyteaWord *w = reinterpret_cast<KyteaWord*>(word);
     return w->tags[i].size();
+}
+
+size_t kytea_word_tags_len(kytea_word_t *word) {
+    KyteaWord *w = reinterpret_cast<KyteaWord*>(word);
+    return w->tags.size();
 }
 
 void kytea_std_string_destroy(kytea_std_string_t *str) {

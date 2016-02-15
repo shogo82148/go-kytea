@@ -5,6 +5,24 @@ package kytea
 // #include "ckytea.h"
 import "C"
 
+type Word struct {
+	Surface string
+	Tags    [][]Tag
+}
+
+func (w Word) String() string {
+	return w.Surface
+}
+
+type Tag struct {
+	Feature string
+	Score   float64
+}
+
+func (t Tag) String() string {
+	return t.Feature
+}
+
 type KyTeaWord struct {
 	word *C.kytea_word_t
 }
@@ -27,4 +45,22 @@ func (w KyTeaWord) CandidateTagsLen(i int) int {
 
 func (w KyTeaWord) TagsLen() int {
 	return int(C.kytea_word_tags_len(w.word))
+}
+
+func (w KyTeaWord) Word(util StringUtil) Word {
+	surface := w.Surface(util)
+	tagsLen := w.TagsLen()
+	tags := make([][]Tag, tagsLen)
+	for i := 0; i < tagsLen; i++ {
+		candidateTagsLen := w.CandidateTagsLen(i)
+		tmp := make([]Tag, candidateTagsLen)
+		for j := 0; j < candidateTagsLen; j++ {
+			tmp[j].Feature, tmp[j].Score = w.Tag(i, j, util)
+		}
+		tags[i] = tmp
+	}
+	return Word{
+		Surface: surface,
+		Tags:    tags,
+	}
 }

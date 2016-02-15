@@ -9,7 +9,7 @@ func TestKyTea(t *testing.T) {
 	}
 	defer kytea.Destory()
 
-	kytea.ReadModel("/usr/local/share/kytea/model.bin")
+	kytea.ReadModel(kytea.Config().ModelFile())
 
 	util := kytea.StringUtil()
 	sentence := util.NewSentence("こんにちは世界")

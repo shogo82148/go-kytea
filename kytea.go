@@ -37,6 +37,12 @@ func (k KyTea) StringUtil() StringUtil {
 	}
 }
 
+func (k KyTea) Config() Config {
+	return Config{
+		config: C.kytea_get_config(k.kytea),
+	}
+}
+
 func (k KyTea) CalculateWS(s Sentence) {
 	C.kytea_calculate_ws(k.kytea, s.sentence)
 }

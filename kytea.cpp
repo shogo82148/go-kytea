@@ -30,6 +30,11 @@ kytea_string_util_t *kytea_get_string_util(kytea_t *kytea) {
     return reinterpret_cast<kytea_string_util_t*>(k->getStringUtil());
 }
 
+kytea_config_t *kytea_get_config(kytea_t *kytea) {
+    kytea::Kytea *k = reinterpret_cast<kytea::Kytea*>(kytea);
+    return reinterpret_cast<kytea_config_t*>(k->getConfig());
+}
+
 void kytea_calculate_ws(kytea_t *kytea, kytea_sentence_t *sentence) {
     Kytea *k = reinterpret_cast<Kytea*>(kytea);
     KyteaSentence *s = reinterpret_cast<KyteaSentence*>(sentence);
@@ -64,6 +69,16 @@ void kytea_sentence_destroy(kytea_sentence_t *sentence) {
 
 size_t kytea_sentence_words_len(kytea_sentence_t *sentence) {
     return reinterpret_cast<KyteaSentence*>(sentence)->words.size();
+}
+
+kytea_std_string_t *kytea_config_get_model_file(kytea_config_t *config) {
+    KyteaConfig *c = reinterpret_cast<KyteaConfig*>(config);
+    return reinterpret_cast<kytea_std_string_t*>(new string(c->getModelFile()));
+}
+
+void kytea_config_set_model_file(kytea_config_t *config, const char *path) {
+    KyteaConfig *c = reinterpret_cast<KyteaConfig*>(config);
+    c->setModelFile(path);
 }
 
 kytea_word_t *kytea_sentence_word_at(kytea_sentence_t *sentence, int i) {

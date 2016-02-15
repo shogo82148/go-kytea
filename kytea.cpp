@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <exception>
 
 #include <kytea/kytea.h>
 #include <kytea/kytea-struct.h>
@@ -23,9 +24,14 @@ void kytea_destroy(kytea_t *kytea) {
     delete reinterpret_cast<kytea::Kytea*>(kytea);
 }
 
-void kytea_read_model(kytea_t *kytea, const char *path) {
-    kytea::Kytea *k = reinterpret_cast<kytea::Kytea*>(kytea);
-    k->readModel(path);
+kytea_std_string_t *kytea_read_model(kytea_t *kytea, const char *path) {
+    try {
+        kytea::Kytea *k = reinterpret_cast<kytea::Kytea*>(kytea);
+        k->readModel(path);
+    } catch (exception& e) {
+        return reinterpret_cast<kytea_std_string_t*>(new string(e.what()));
+    }
+    return NULL;
 }
 
 kytea_string_util_t *kytea_get_string_util(kytea_t *kytea) {
@@ -38,27 +44,42 @@ kytea_config_t *kytea_get_config(kytea_t *kytea) {
     return reinterpret_cast<kytea_config_t*>(k->getConfig());
 }
 
-void kytea_calculate_ws(kytea_t *kytea, kytea_sentence_t *sentence) {
-    Kytea *k = reinterpret_cast<Kytea*>(kytea);
-    KyteaSentence *s = reinterpret_cast<KyteaSentence*>(sentence);
-    k->calculateWS(*s);
-}
-
-void kytea_calculate_tags(kytea_t *kytea, kytea_sentence_t *sentence, int i) {
-    Kytea *k = reinterpret_cast<Kytea*>(kytea);
-    KyteaSentence *s = reinterpret_cast<KyteaSentence*>(sentence);
-    k->calculateTags(*s, i);
-}
-
-void kytea_calculate_all_tags(kytea_t *kytea, kytea_sentence_t *sentence) {
-    Kytea *k = reinterpret_cast<Kytea*>(kytea);
-    KyteaSentence *s = reinterpret_cast<KyteaSentence*>(sentence);
-    KyteaConfig* config = k->getConfig();
-    for(int i = 0; i < config->getNumTags(); i++) {
-        if (config->getDoTag(i)) {
-            k->calculateTags(*s, i);
-        }
+kytea_std_string_t *kytea_calculate_ws(kytea_t *kytea, kytea_sentence_t *sentence) {
+    try {
+        Kytea *k = reinterpret_cast<Kytea*>(kytea);
+        KyteaSentence *s = reinterpret_cast<KyteaSentence*>(sentence);
+        k->calculateWS(*s);
+    } catch (exception& e) {
+        return reinterpret_cast<kytea_std_string_t*>(new string(e.what()));
     }
+    return NULL;
+}
+
+kytea_std_string_t *kytea_calculate_tags(kytea_t *kytea, kytea_sentence_t *sentence, int i) {
+    try {
+        Kytea *k = reinterpret_cast<Kytea*>(kytea);
+        KyteaSentence *s = reinterpret_cast<KyteaSentence*>(sentence);
+        k->calculateTags(*s, i);
+    } catch (exception& e) {
+        return reinterpret_cast<kytea_std_string_t*>(new string(e.what()));
+    }
+    return NULL;
+}
+
+kytea_std_string_t *kytea_calculate_all_tags(kytea_t *kytea, kytea_sentence_t *sentence) {
+    try {
+        Kytea *k = reinterpret_cast<Kytea*>(kytea);
+        KyteaSentence *s = reinterpret_cast<KyteaSentence*>(sentence);
+        KyteaConfig* config = k->getConfig();
+        for(int i = 0; i < config->getNumTags(); i++) {
+            if (config->getDoTag(i)) {
+                k->calculateTags(*s, i);
+            }
+        }
+    } catch (exception& e) {
+        return reinterpret_cast<kytea_std_string_t*>(new string(e.what()));
+    }
+    return NULL;
 }
 
 

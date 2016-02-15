@@ -13,7 +13,10 @@ func ExampleKyTea_Parse() {
 	}
 	defer tagger.Destroy()
 
-	tagger.ReadModel(tagger.Config().ModelFile())
+	err = tagger.ReadModel(tagger.Config().ModelFile())
+	if err != nil {
+		panic(err)
+	}
 
 	result, err := tagger.Parse("こんにちは世界")
 	if err != nil {

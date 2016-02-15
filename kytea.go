@@ -25,10 +25,15 @@ func (k KyTea) Destroy() {
 	C.kytea_destroy(k.kytea)
 }
 
-func (k KyTea) ReadModel(path string) {
+func (k KyTea) ReadModel(path string) error {
 	cpath := C.CString(path)
 	defer C.free(unsafe.Pointer(cpath))
-	C.kytea_read_model(k.kytea, cpath)
+	err := C.kytea_read_model(k.kytea, cpath)
+	if err != nil {
+		defer C.kytea_std_string_destroy(err)
+		return errors.New(C.GoString(C.kytea_std_string_cstring(err)))
+	}
+	return nil
 }
 
 func (k KyTea) StringUtil() StringUtil {
@@ -43,16 +48,31 @@ func (k KyTea) Config() Config {
 	}
 }
 
-func (k KyTea) CalculateWS(s Sentence) {
-	C.kytea_calculate_ws(k.kytea, s.sentence)
+func (k KyTea) CalculateWS(s Sentence) error {
+	err := C.kytea_calculate_ws(k.kytea, s.sentence)
+	if err != nil {
+		defer C.kytea_std_string_destroy(err)
+		return errors.New(C.GoString(C.kytea_std_string_cstring(err)))
+	}
+	return nil
 }
 
-func (k KyTea) CalculateTags(s Sentence, i int) {
-	C.kytea_calculate_tags(k.kytea, s.sentence, C.int(i))
+func (k KyTea) CalculateTags(s Sentence, i int) error {
+	err := C.kytea_calculate_tags(k.kytea, s.sentence, C.int(i))
+	if err != nil {
+		defer C.kytea_std_string_destroy(err)
+		return errors.New(C.GoString(C.kytea_std_string_cstring(err)))
+	}
+	return nil
 }
 
-func (k KyTea) CalculateAllTags(s Sentence) {
-	C.kytea_calculate_all_tags(k.kytea, s.sentence)
+func (k KyTea) CalculateAllTags(s Sentence) error {
+	err := C.kytea_calculate_all_tags(k.kytea, s.sentence)
+	if err != nil {
+		defer C.kytea_std_string_destroy(err)
+		return errors.New(C.GoString(C.kytea_std_string_cstring(err)))
+	}
+	return nil
 }
 
 func (k KyTea) Parse(str string) ([]Word, error) {
@@ -62,10 +82,16 @@ func (k KyTea) Parse(str string) ([]Word, error) {
 	defer sentence.Destroy()
 
 	if config.DoWS() {
-		k.CalculateWS(sentence)
+		err := k.CalculateWS(sentence)
+		if err != nil {
+			return nil, err
+		}
 	}
 	if config.DoTags() {
-		k.CalculateAllTags(sentence)
+		err := k.CalculateAllTags(sentence)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	return sentence.Words(util), nil

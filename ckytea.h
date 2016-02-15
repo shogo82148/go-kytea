@@ -16,12 +16,12 @@ typedef struct kytea_tag_t {
 // functions for handling Kytea
 kytea_t *kytea_new(void);
 void kytea_destroy(kytea_t *kytea);
-void kytea_read_model(kytea_t *kytea, const char *path);
+kytea_std_string_t *kytea_read_model(kytea_t *kytea, const char *path);
 kytea_string_util_t *kytea_get_string_util(kytea_t *kytea);
 kytea_config_t *kytea_get_config(kytea_t *kytea);
-void kytea_calculate_ws(kytea_t *kytea, kytea_sentence_t *sentence);
-void kytea_calculate_tags(kytea_t *kytea, kytea_sentence_t *sentence, int i);
-void kytea_calculate_all_tags(kytea_t *kytea, kytea_sentence_t *sentence);
+kytea_std_string_t *kytea_calculate_ws(kytea_t *kytea, kytea_sentence_t *sentence);
+kytea_std_string_t *kytea_calculate_tags(kytea_t *kytea, kytea_sentence_t *sentence, int i);
+kytea_std_string_t *kytea_calculate_all_tags(kytea_t *kytea, kytea_sentence_t *sentence);
 
 // functions for handling KyteaStringUtil
 kytea_sentence_t *kytea_string_util_new_sentence(kytea_string_util_t *util, const char *input, size_t length);

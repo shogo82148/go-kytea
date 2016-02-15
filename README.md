@@ -1,5 +1,7 @@
 # go-kytea
 
+[![Build Status](https://travis-ci.org/shogo82148/go-kytea.svg?branch=master)](https://travis-ci.org/shogo82148/go-kytea)
+
 [KyTea](http://www.phontron.com/kytea/) binding for Golang
 
 ## SYNOPSIS

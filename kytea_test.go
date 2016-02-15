@@ -52,6 +52,10 @@ func TestKyTea(t *testing.T) {
 	}
 
 	if sentence.Word(0).CandidateTagsLen(0) < 1 {
-		t.Errorf("expected TagsLen is larger than 1, got %d", sentence.Word(0).CandidateTagsLen(0))
+		t.Errorf("expected CandidateTagsLen is larger than 1, got %d", sentence.Word(0).CandidateTagsLen(0))
+	}
+
+	if sentence.Word(0).TagsLen() != 2 {
+		t.Errorf("expected 2, got %d", sentence.Word(0).TagsLen())
 	}
 }

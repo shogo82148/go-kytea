@@ -21,7 +21,7 @@ func New() (KyTea, error) {
 	return KyTea{kytea: kytea}, nil
 }
 
-func (k KyTea) Destory() {
+func (k KyTea) Destroy() {
 	C.kytea_destroy(k.kytea)
 }
 
@@ -55,11 +55,11 @@ func (k KyTea) CalculateAllTags(s Sentence) {
 	C.kytea_calculate_all_tags(k.kytea, s.sentence)
 }
 
-func (k KyTea) Parse(str string) []Word {
+func (k KyTea) Parse(str string) ([]Word, error) {
 	config := k.Config()
 	util := k.StringUtil()
 	sentence := util.NewSentence(str)
-	defer sentence.Destory()
+	defer sentence.Destroy()
 
 	if config.DoWS() {
 		k.CalculateWS(sentence)
@@ -68,5 +68,5 @@ func (k KyTea) Parse(str string) []Word {
 		k.CalculateAllTags(sentence)
 	}
 
-	return sentence.Words(util)
+	return sentence.Words(util), nil
 }

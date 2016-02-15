@@ -9,7 +9,7 @@ type Sentence struct {
 	sentence *C.kytea_sentence_t
 }
 
-func (s Sentence) Destory() {
+func (s Sentence) Destroy() {
 	C.kytea_sentence_destroy(s.sentence)
 }
 

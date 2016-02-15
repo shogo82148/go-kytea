@@ -7,13 +7,13 @@ func TestKyTea(t *testing.T) {
 	if err != nil {
 		t.Error("unexpected error", err)
 	}
-	defer kytea.Destory()
+	defer kytea.Destroy()
 
 	kytea.ReadModel(kytea.Config().ModelFile())
 
 	util := kytea.StringUtil()
 	sentence := util.NewSentence("こんにちは世界")
-	defer sentence.Destory()
+	defer sentence.Destroy()
 
 	kytea.CalculateWS(sentence)
 	kytea.CalculateAllTags(sentence)

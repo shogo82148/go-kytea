@@ -11,7 +11,15 @@ type Word struct {
 }
 
 func (w Word) String() string {
-	return w.Surface
+	s := w.Surface
+	if w.Tags != nil {
+		for _, tag := range w.Tags {
+			if tag != nil && len(tag) > 0 {
+				s += "/" + tag[0].Feature
+			}
+		}
+	}
+	return s
 }
 
 type Tag struct {

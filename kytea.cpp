@@ -54,8 +54,11 @@ void kytea_calculate_all_tags(kytea_t *kytea, kytea_sentence_t *sentence) {
     Kytea *k = reinterpret_cast<Kytea*>(kytea);
     KyteaSentence *s = reinterpret_cast<KyteaSentence*>(sentence);
     KyteaConfig* config = k->getConfig();
-    for(int i = 0; i < config->getNumTags(); i++)
-        k->calculateTags(*s, i);
+    for(int i = 0; i < config->getNumTags(); i++) {
+        if (config->getDoTag(i)) {
+            k->calculateTags(*s, i);
+        }
+    }
 }
 
 

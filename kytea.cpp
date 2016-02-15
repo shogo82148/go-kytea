@@ -71,6 +71,11 @@ size_t kytea_sentence_words_len(kytea_sentence_t *sentence) {
     return reinterpret_cast<KyteaSentence*>(sentence)->words.size();
 }
 
+void kytea_config_parse_run_command_line(kytea_config_t *config, int argc, const char **argv) {
+    KyteaConfig *c = reinterpret_cast<KyteaConfig*>(config);
+    c->parseRunCommandLine(argc, argv);
+}
+
 kytea_std_string_t *kytea_config_get_model_file(kytea_config_t *config) {
     KyteaConfig *c = reinterpret_cast<KyteaConfig*>(config);
     return reinterpret_cast<kytea_std_string_t*>(new string(c->getModelFile()));

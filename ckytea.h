@@ -22,6 +22,7 @@ void kytea_calculate_ws(kytea_t *kytea, kytea_sentence_t *sentence);
 void kytea_calculate_tags(kytea_t *kytea, kytea_sentence_t *sentence, int i);
 void kytea_calculate_all_tags(kytea_t *kytea, kytea_sentence_t *sentence);
 kytea_sentence_t *kytea_string_util_new_sentence(kytea_string_util_t *util, const char *input, size_t length);
+void kytea_config_parse_run_command_line(kytea_config_t *config, int argc, const char **argv);
 kytea_std_string_t *kytea_config_get_model_file(kytea_config_t *config);
 void kytea_config_set_model_file(kytea_config_t *config, const char *path);
 void kytea_sentence_destroy(kytea_sentence_t *sentence);

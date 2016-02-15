@@ -1,3 +1,4 @@
+// Package kytea provides a wrapper for KyTea
 package kytea
 
 // #cgo pkg-config: kytea
@@ -9,10 +10,12 @@ import (
 	"unsafe"
 )
 
+// KyTea is a wrapper for kytea::Kytea
 type KyTea struct {
 	kytea *C.kytea_t
 }
 
+// New creates new KyTea.
 func New() (KyTea, error) {
 	kytea := C.kytea_new()
 	if kytea == nil {
@@ -25,6 +28,7 @@ func (k KyTea) Destroy() {
 	C.kytea_destroy(k.kytea)
 }
 
+// ReadModel loads a KyTea model from a model file
 func (k KyTea) ReadModel(path string) error {
 	cpath := C.CString(path)
 	defer C.free(unsafe.Pointer(cpath))
@@ -36,6 +40,7 @@ func (k KyTea) ReadModel(path string) error {
 	return nil
 }
 
+// StringUtil returns the string utility class.
 func (k KyTea) StringUtil() StringUtil {
 	return StringUtil{
 		util: C.kytea_get_string_util(k.kytea),
@@ -48,6 +53,7 @@ func (k KyTea) Config() Config {
 	}
 }
 
+// CalculateWS calculates the word segmentation and finds the word boundaries.
 func (k KyTea) CalculateWS(s Sentence) error {
 	err := C.kytea_calculate_ws(k.kytea, s.sentence)
 	if err != nil {
@@ -57,6 +63,7 @@ func (k KyTea) CalculateWS(s Sentence) error {
 	return nil
 }
 
+// CalculateTags finds the tags for tag level i.
 func (k KyTea) CalculateTags(s Sentence, i int) error {
 	err := C.kytea_calculate_tags(k.kytea, s.sentence, C.int(i))
 	if err != nil {
@@ -66,6 +73,7 @@ func (k KyTea) CalculateTags(s Sentence, i int) error {
 	return nil
 }
 
+// CalculateAllTags finds the tags for each tag level.
 func (k KyTea) CalculateAllTags(s Sentence) error {
 	err := C.kytea_calculate_all_tags(k.kytea, s.sentence)
 	if err != nil {
@@ -75,6 +83,7 @@ func (k KyTea) CalculateAllTags(s Sentence) error {
 	return nil
 }
 
+// Parse finds the word boundaries and the tags.
 func (k KyTea) Parse(str string) ([]Word, error) {
 	config := k.Config()
 	util := k.StringUtil()
